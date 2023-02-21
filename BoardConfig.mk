@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Inherit from the proprietary version
--include vendor/samsung/core33g/BoardConfigVendor.mk
+-include vendor/samsung/j1pop3g/BoardConfigVendor.mk
 
 # Platform
 TARGET_ARCH := arm
@@ -35,10 +35,11 @@ TARGET_NO_BOOTLOADER := true
 
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1258291200
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 6094323712
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1080033280
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 2428502016
 BOARD_CACHEIMAGE_PARTITION_SIZE := 209715200
-BOARD_FLASH_BLOCK_SIZE := 131072
+BOARD_PERSISTIMAGE_PARTITION_SIZE := 9437184
+BOARD_FLASH_BLOCK_SIZE := 1024
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 
@@ -46,37 +47,37 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8
 BOARD_KERNEL_PAGESIZE := 2048
-TARGET_KERNEL_CONFIG := cyanogen_core33g_defconfig
-TARGET_KERNEL_SOURCE := kernel/samsung/core33g
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt device/samsung/core33g/dt.img
+TARGET_KERNEL_CONFIG := cyanogen_j1pop3g_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/j1pop3g
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --dt device/samsung/j1pop3g/dt.img
 
 # RIL
-BOARD_RIL_CLASS := ../../../device/samsung/core33g/ril
+BOARD_RIL_CLASS := ../../../device/samsung/j1pop3g/ril
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/core33g/bluetooth
-BOARD_BLUEDROID_VENDOR_CONF := device/samsung/core33g/bluetooth/libbt_vndcfg.txt
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/j1pop3g/bluetooth
+BOARD_SPRD_WCNBT_SR2351 := true
+BOARD_HAVE_FM_TROUT := true
+BOARD_USE_SPRD_FMAPP := true
+BOARD_USE_SPRD_4IN1_GPS := true
 
 # Wifi
-BOARD_WLAN_DEVICE := bcmdhd
-BOARD_WLAN_DEVICE_REV := bcm4343
-WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-BOARD_HOSTAPD_DRIVER := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-WIFI_DRIVER_FW_PATH_PARAM := "/sys/module/dhd/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_STA := "/system/etc/wifi/bcmdhd_sta.bin"
-WIFI_DRIVER_FW_PATH_AP := "/system/etc/wifi/bcmdhd_apsta.bin"
-WIFI_DRIVER_NVRAM_PATH_PARAM := "/sys/module/dhd/parameters/nvram_path"
-WIFI_DRIVER_NVRAM_PATH := "/system/etc/wifi/nvram_net.txt"
-WIFI_BAND := 802_11_ABG
-BOARD_HAVE_SAMSUNG_WIFI := true
+WPA_SUPPLICANT_VERSION      := VER_2_1_DEVEL
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_sprdwl
+BOARD_HOSTAPD_DRIVER        := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_sprdwl
+BOARD_WLAN_DEVICE           := sc2351
+WIFI_DRIVER_FW_PATH_PARAM   := "/data/misc/wifi/fwpath"
+WIFI_DRIVER_FW_PATH_STA     := "sta_mode"
+WIFI_DRIVER_FW_PATH_P2P     := "p2p_mode"
+WIFI_DRIVER_FW_PATH_AP      := "ap_mode"
+WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/sprdwl.ko"
+WIFI_DRIVER_MODULE_NAME     := "sprdwl"
 
 # Hardware rendering
-BOARD_EGL_CFG := device/samsung/core33g/configs/egl.cfg
+BOARD_EGL_CFG := device/samsung/j1pop3g/configs/egl.cfg
 BOARD_USE_MHEAP_SCREENSHOT := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
@@ -109,7 +110,7 @@ BOARD_NEEDS_MEMORYHEAPION_SPRD := true
 COMMON_GLOBAL_CFLAGS += -DSPRD_HARDWARE
 
 # healthd
-BOARD_HAL_STATIC_LIBRARIES := libhealthd-core33g.sc8830
+BOARD_HAL_STATIC_LIBRARIES := libhealthd-j1pop3g.sc8830
 
 # Use the CM PowerHAL
 TARGET_USES_CM_POWERHAL := true
@@ -126,7 +127,7 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := SM-G360H,SM-G360HU,core33g,core33gdd,core33gdx
+TARGET_OTA_ASSERT_DEVICE := SM-J110H,j1pop3g,j1pop3gjv,j1pop3gub
 
 # SELinux
 #BOARD_SEPOLICY_DIRS += device/samsung/core33g/sepolicy
@@ -149,9 +150,6 @@ TARGET_OTA_ASSERT_DEVICE := SM-G360H,SM-G360HU,core33g,core33gdd,core33gdx
 # Use dmalloc() for such low memory devices like us
 MALLOC_IMPL := dlmalloc
 
-# Use prebuilt webviewchromium to cut down build time
-PRODUCT_PREBUILT_WEBVIEWCHROMIUM := yes
-
 # Enable dex-preoptimization to speed up the first boot sequence
 WITH_DEXPREOPT := true
 #WITH_DEXPREOPT_BOOT_IMG_ONLY := true
@@ -166,7 +164,7 @@ BACKLIGHT_PATH := /sys/class/backlight/panel/brightness
 
 
 # CMHW
-BOARD_HARDWARE_CLASS := device/samsung/core33g/cmhw/
+BOARD_HARDWARE_CLASS := device/samsung/j1pop3g/cmhw/
 
 # TWRP
 ##RECOVERY_VARIANT := twrp
@@ -183,8 +181,8 @@ TW_FLASH_FROM_STORAGE := true
 TW_NO_REBOOT_BOOTLOADER := true
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/platform/sec-thermistor/temperature"
 TWHAVE_SELINUX := true
-TARGET_RECOVERY_INITRC := device/samsung/core33g/etc/init.rc
-TARGET_RECOVERY_FSTAB := device/samsung/core33g/ramdisk/recovery.fstab
+TARGET_RECOVERY_INITRC := device/samsung/j1pop3g/etc/init.rc
+TARGET_RECOVERY_FSTAB := device/samsung/j1pop3g/ramdisk/recovery.fstab
 TW_HAS_DOWNLOAD_MODE := true
 DEVICE_RESOLUTION := 480x800
 TW_THEME := portrait_mdpi
